@@ -686,6 +686,32 @@ html[data-theme="light"] .profile-photo-shell img {
   font-size: 0.98rem;
 }
 
+.ai-principle {
+  margin: -1.5rem 0 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  display: grid;
+  grid-template-columns: 0.35fr 1.2fr 0.75fr;
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  border-radius: 22px;
+  box-shadow: var(--shadow-card);
+}
+
+.ai-principle .scope-label {
+  color: var(--accent);
+}
+
+.ai-principle h3 {
+  font-size: clamp(1.55rem, 2.6vw, 2.5rem);
+}
+
+.ai-principle > p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .feature-case {
   overflow: hidden;
   display: grid;
@@ -1023,6 +1049,10 @@ html[data-theme="light"] .profile-photo-shell img {
   margin-top: auto;
 }
 
+.lab-card {
+  background: color-mix(in srgb, var(--surface) 78%, var(--bg-elevated));
+}
+
 .card-link {
   display: inline-flex;
   align-items: center;
@@ -1037,6 +1067,56 @@ html[data-theme="light"] .profile-photo-shell img {
 
 .impact-section {
   padding-top: calc(var(--section-space) * 1.15);
+}
+
+.scope-card {
+  margin-bottom: 1rem;
+  padding: clamp(1.6rem, 3.5vw, 3rem);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 7vw, 6rem);
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 24px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 65%, black), 0 18px 55px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.scope-label {
+  margin-bottom: 0.8rem;
+  color: color-mix(in srgb, currentColor 68%, transparent);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.scope-card h3,
+.ai-principle h3,
+.impact-stat-highlight h3 {
+  margin-bottom: 0;
+  font-size: clamp(1.8rem, 3.4vw, 3.2rem);
+  font-weight: 560;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.scope-copy > p {
+  margin-bottom: 1.35rem;
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+}
+
+.scope-copy ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scope-copy li {
+  padding: 0.55rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--accent-ink) 20%, transparent);
+  font-size: 0.84rem;
+  font-weight: 620;
 }
 
 .impact-grid {
@@ -1111,6 +1191,27 @@ html[data-theme="light"] .profile-photo-shell img {
 .impact-stat-quote a:focus-visible {
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.impact-stat-highlight {
+  grid-column: span 2;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--blue) 22%, transparent), transparent 13rem),
+    var(--surface);
+}
+
+.impact-stat-highlight .impact-unit {
+  color: var(--blue);
+}
+
+.impact-stat-highlight h3 {
+  max-width: 32rem;
+  margin: 1.2rem 0 2rem;
+}
+
+.impact-stat-highlight p {
+  max-width: 36rem;
 }
 
 .impact-note {
@@ -1212,6 +1313,24 @@ html[data-theme="light"] .profile-photo-shell img {
   color: var(--muted);
 }
 
+.text-link {
+  min-height: 44px;
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .timeline {
   margin: 0;
   padding: 0;
@@ -1278,7 +1397,7 @@ html[data-theme="light"] .profile-photo-shell img {
 }
 
 .proof-card:nth-child(n + 3) {
-  grid-column: span 2;
+  grid-column: span 3;
 }
 
 .proof-card:hover,
@@ -1560,10 +1679,6 @@ html[data-theme="light"] .profile-photo-shell img {
   .proof-card:nth-child(n) {
     grid-column: auto;
   }
-
-  .proof-card:last-child {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 760px) {
@@ -1628,7 +1743,9 @@ html[data-theme="light"] .profile-photo-shell img {
 
   .manifesto-grid,
   .section-heading,
-  .career-section {
+  .career-section,
+  .scope-card,
+  .ai-principle {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
@@ -1692,7 +1809,8 @@ html[data-theme="light"] .profile-photo-shell img {
   }
 
   .impact-stat-wide,
-  .impact-stat-quote {
+  .impact-stat-quote,
+  .impact-stat-highlight {
     grid-column: auto;
   }
 

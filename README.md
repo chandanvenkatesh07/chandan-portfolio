@@ -1,6 +1,6 @@
-# Chandan Venkatesh Portfolio Preview
+# Chandan Venkatesh Portfolio
 
-This is a local, build-free portfolio prototype. It uses plain HTML, CSS, and JavaScript and does not require npm or a framework.
+This is the source for [chandanvenkatesh.com](https://chandanvenkatesh.com). It uses plain HTML, CSS, and JavaScript and deploys through Vercel from the `main` branch.
 
 ## Review locally
 
