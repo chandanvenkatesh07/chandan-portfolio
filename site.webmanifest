@@ -1,0 +1,16 @@
+{
+  "name": "Chandan Venkatesh",
+  "short_name": "CV",
+  "description": "Enterprise AI and commerce architecture portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0d10",
+  "theme_color": "#0a0d10",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
