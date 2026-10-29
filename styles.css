@@ -1382,12 +1382,6 @@ html[data-theme="light"] .profile-photo-shell img {
   text-underline-offset: 4px;
 }
 
-.impact-note {
-  margin-top: 1rem;
-  color: var(--faint);
-  font-size: 0.72rem;
-}
-
 .article-list {
   border-top: 1px solid var(--line);
 }
