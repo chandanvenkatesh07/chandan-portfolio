@@ -195,47 +195,49 @@
         </div>
 
         <article class="feature-case">
-          <div class="case-visual adaptive-visual" role="img" aria-label="Abstract visualization of an adaptive storefront interface">
-            <div class="mock-window">
+          <div class="case-visual associate-visual" role="img" aria-label="Abstract visualization of a retail associate voice assistant">
+            <div class="mock-window associate-console">
               <div class="mock-toolbar">
                 <span></span><span></span><span></span>
-                <small>adaptive-storefront</small>
+                <small>retail-associate-assistant</small>
               </div>
-              <div class="mock-storefront">
-                <div class="mock-sidebar">
-                  <span class="mock-line mock-line-short"></span>
-                  <span class="mock-line"></span>
-                  <span class="mock-line"></span>
-                  <span class="mock-line mock-line-mid"></span>
+              <div class="associate-screen">
+                <div class="associate-status">
+                  <span></span>
+                  Shadow mode · Listening locally
                 </div>
-                <div class="mock-content">
-                  <div class="mock-hero-block">
-                    <span class="mock-label">intent: repair</span>
-                    <strong>Fix the leak.<br />Get the exact parts.</strong>
-                  </div>
-                  <div class="mock-product-row">
-                    <span></span><span></span><span></span>
-                  </div>
+                <div class="conversation-line conversation-customer">
+                  <small>Customer</small>
+                  <p>Where can I find a replacement air filter?</p>
+                </div>
+                <div class="conversation-line conversation-assistant">
+                  <small>Associate cue</small>
+                  <p>Air filters · Aisle 12 · Bay 4</p>
+                </div>
+                <div class="assistant-path">
+                  <span>Fast lookup</span>
+                  <span>Confidence gate</span>
+                  <span>Grounded fallback</span>
                 </div>
               </div>
-              <div class="orchestration-pill">Model plans · Application renders</div>
+              <div class="orchestration-pill">Local first · LLM when ambiguous</div>
             </div>
           </div>
           <div class="case-copy">
-            <div class="case-meta"><span>Flagship case study</span><time datetime="2026-06-14">June 2026</time></div>
-            <h3>Adaptive Storefront</h3>
+            <div class="case-meta"><span>Flagship case study</span><time datetime="2026-07-10">July 2026</time></div>
+            <h3>Retail Associate Assistant</h3>
             <p class="case-lede">
-              A GenUI commerce experiment where AI changes the structure of the page—not just the ranking of products—based on the shopper’s current intent.
+              A local-first voice assistant that listens in shadow mode, resolves common store questions on a deterministic fast path, and uses a grounded model only when the request is ambiguous.
             </p>
             <ul class="evidence-list">
-              <li>OpenAI tool calls constrained by Zod schemas</li>
-              <li>Grounded product catalog with deterministic fallbacks</li>
-              <li>Progressive streaming UI in Next.js and React</li>
-              <li>MCP endpoint exposes the same composition vocabulary to agents</li>
+              <li>Sub-second fuzzy lookup keeps the LLM off the common path</li>
+              <li>Conversation shadowing preserves customer and associate context</li>
+              <li>Confidence gating controls grounded model escalation</li>
+              <li>Private spoken cues support the associate without interrupting the interaction</li>
             </ul>
             <div class="case-links">
-              <a href="https://github.com/chandanvenkatesh07/adaptive-storefront" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
-              <a href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_ive-been-trying-to-understand-what-after-ugcPost-7472672024079966209-EbB9/" target="_blank" rel="noreferrer">Build notes <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/chandanvenkatesh07/retail-associate-assistant" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
+              <a href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_built-a-prototype-retail-associate-copilot-activity-7484408067980341248-vjwt" target="_blank" rel="noreferrer">Watch the demonstration <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </article>
@@ -277,20 +279,21 @@
             </a>
           </article>
 
-          <article class="project-card project-card-copilot">
+          <article class="project-card project-card-adaptive">
             <div class="project-card-top">
               <span class="project-number">04</span>
-              <time datetime="2026-07-10">Jul 2026</time>
+              <time datetime="2026-06-14">Jun 2026</time>
             </div>
-            <div class="project-symbol copilot-symbol" aria-hidden="true">
-              <span class="sound-wave"></span><span class="sound-wave"></span><span class="sound-wave"></span><span class="sound-wave"></span><span class="sound-wave"></span>
+            <div class="project-symbol adaptive-symbol" aria-hidden="true">
+              <span class="adaptive-sidebar-symbol"></span>
+              <span class="adaptive-content-symbol"><i></i><i></i><i></i></span>
             </div>
-            <p class="project-label">Voice AI · Store operations</p>
-            <h3>Retail Associate Assistant</h3>
-            <p>A local-first voice assistant that shadows customer conversations, answers common product-location questions on a deterministic fast path, and escalates ambiguity to a grounded LLM.</p>
+            <p class="project-label">Generative UI · Commerce</p>
+            <h3>Adaptive Storefront</h3>
+            <p>A GenUI commerce experiment where AI changes the structure of the page—not just product ranking—based on the shopper’s current intent.</p>
             <div class="card-links-row">
-              <a class="card-link" href="https://github.com/chandanvenkatesh07/retail-associate-assistant" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
-              <a class="card-link" href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_built-a-prototype-retail-associate-copilot-activity-7484408067980341248-vjwt" target="_blank" rel="noreferrer">Demo <span aria-hidden="true">↗</span></a>
+              <a class="card-link" href="https://github.com/chandanvenkatesh07/adaptive-storefront" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
+              <a class="card-link" href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_ive-been-trying-to-understand-what-after-ugcPost-7472672024079966209-EbB9/" target="_blank" rel="noreferrer">Build notes <span aria-hidden="true">↗</span></a>
             </div>
           </article>
         </div>

@@ -810,6 +810,105 @@ html[data-theme="light"] .profile-photo-shell img {
   border-radius: 10px;
 }
 
+.associate-visual {
+  background:
+    radial-gradient(circle at 22% 25%, rgba(142, 184, 255, 0.2), transparent 28%),
+    radial-gradient(circle at 78% 72%, rgba(183, 243, 107, 0.14), transparent 30%),
+    linear-gradient(145deg, #111a24, #0d1419 50%, #15211b);
+}
+
+.associate-console {
+  color: #eaf0f2;
+  background: #11181d;
+}
+
+.associate-console .mock-toolbar {
+  color: #98a4aa;
+  background: #1a2329;
+}
+
+.associate-screen {
+  min-height: 350px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  padding-bottom: clamp(3.6rem, 7vw, 4.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.associate-status {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #9cabb1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.associate-status span {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.conversation-line {
+  max-width: 84%;
+  padding: 1rem 1.15rem;
+  border-radius: 14px;
+}
+
+.conversation-line small {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #849199;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.conversation-line p {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+  line-height: 1.35;
+}
+
+.conversation-customer {
+  align-self: flex-start;
+  background: #202a31;
+}
+
+.conversation-assistant {
+  align-self: flex-end;
+  color: #132006;
+  background: #ccefa2;
+}
+
+.conversation-assistant small {
+  color: #526d31;
+}
+
+.assistant-path {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.assistant-path span {
+  padding: 0.45rem 0.65rem;
+  color: #a9b5ba;
+  background: #1b252b;
+  border-radius: 7px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.55rem;
+}
+
 .orchestration-pill {
   position: absolute;
   right: 1rem;
@@ -963,6 +1062,41 @@ html[data-theme="light"] .profile-photo-shell img {
 .sound-wave:nth-child(2),
 .sound-wave:nth-child(4) { height: 46px; }
 .sound-wave:nth-child(3) { height: 72px; background: var(--accent); }
+
+.adaptive-symbol {
+  gap: 0.65rem;
+  padding: 1.2rem;
+  background: linear-gradient(145deg, #cfe1ae, #9fc47d);
+}
+
+.adaptive-sidebar-symbol {
+  width: 24%;
+  height: 82%;
+  background: rgba(22, 37, 25, 0.2);
+  border-radius: 8px;
+}
+
+.adaptive-content-symbol {
+  width: 62%;
+  height: 82%;
+  padding: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.45rem;
+  background: rgba(250, 251, 244, 0.72);
+  border-radius: 8px;
+}
+
+.adaptive-content-symbol i {
+  display: block;
+  background: rgba(22, 37, 25, 0.18);
+  border-radius: 5px;
+}
+
+.adaptive-content-symbol i:first-child {
+  grid-column: 1 / -1;
+  background: rgba(73, 112, 46, 0.38);
+}
 
 .compass-symbol {
   position: relative;
