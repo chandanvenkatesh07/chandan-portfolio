@@ -1450,6 +1450,12 @@ html[data-theme="light"] .profile-photo-shell img {
   transform: translate(2px, -2px);
 }
 
+.writing-archive-link {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .career-section {
   display: grid;
   grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
