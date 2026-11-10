@@ -321,17 +321,36 @@ def article_page(article: dict[str, str], all_articles: list[dict[str, str]]) ->
 
 
 def index_page(articles: list[dict[str, str]]) -> str:
-    cards = "".join(
-        f"""<a class="writing-card" href="/articles/{article['slug']}/">
-  <div class="writing-card-meta"><span>{escape(article['topic'])}</span><time datetime="{article['date_iso']}">{escape(article['date_display'])}</time></div>
-  <h2>{escape(article['title'])}</h2><p>{escape(article['description'])}</p><span class="writing-card-link">Read article →</span>
-</a>"""
+    stream = "".join(
+        f"""<article class="stream-article" id="{article['slug']}">
+  <header class="stream-article-header">
+    <div class="stream-article-meta"><span>{escape(article['topic'])}</span><time datetime="{article['date_iso']}">{escape(article['date_display'])}</time></div>
+    <h2>{escape(article['title'])}</h2>
+    {f'<img class="stream-article-cover" src="{article["cover"]}" alt="" width="480" height="270" loading="lazy">' if article['cover'] else ''}
+  </header>
+  <div class="stream-article-body article-body">{article['body']}<aside class="article-origin"><span>Originally published on LinkedIn</span><a href="{article['url']}" target="_blank" rel="noreferrer">Original and discussion ↗</a></aside></div>
+</article>"""
         for article in articles
     )
+    collection_schema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Articles by Chandan Venkatesh",
+        "url": "https://chandanvenkatesh.com/articles/",
+        "hasPart": [
+            {
+                "@type": "Article",
+                "headline": article["title"],
+                "datePublished": article["date_iso"],
+                "url": f"https://chandanvenkatesh.com/articles/#{article['slug']}",
+            }
+            for article in articles
+        ],
+    }
     return f"""<!doctype html>
 <html lang="en" data-theme="dark">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Articles by Chandan Venkatesh about enterprise AI, agent workflows, generative interfaces, retail systems, and AI-assisted engineering."><link rel="canonical" href="https://chandanvenkatesh.com/articles/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="Chandan Venkatesh"><meta property="og:title" content="Articles — Chandan Venkatesh"><meta property="og:description" content="Field notes on enterprise AI, retail systems, agent workflows, and AI-assisted engineering."><meta property="og:url" content="https://chandanvenkatesh.com/articles/"><meta property="og:image" content="https://chandanvenkatesh.com/assets/chandan-venkatesh.jpg"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#0a0d10"><title>Articles — Chandan Venkatesh</title><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/article-styles.css"></head>
-<body class="writing-index">{header()}<main id="main"><header class="writing-hero"><p class="section-kicker">Articles</p><h1>Writing about AI in practice.</h1><p>Architecture notes, experiments, and operating lessons from building with AI—not commentary from the sidelines.</p></header><section class="writing-grid" aria-label="Articles">{cards}</section></main>{footer()}<script src="/script.js"></script></body></html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Articles by Chandan Venkatesh about enterprise AI, agent workflows, generative interfaces, retail systems, and AI-assisted engineering."><link rel="canonical" href="https://chandanvenkatesh.com/articles/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="Chandan Venkatesh"><meta property="og:title" content="Articles — Chandan Venkatesh"><meta property="og:description" content="Five articles in one continuous reading stream about enterprise AI, retail systems, agent workflows, and AI-assisted engineering."><meta property="og:url" content="https://chandanvenkatesh.com/articles/"><meta property="og:image" content="https://chandanvenkatesh.com/assets/chandan-venkatesh.jpg"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#0a0d10"><title>Articles — Chandan Venkatesh</title><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/article-styles.css"><script type="application/ld+json">{json.dumps(collection_schema, ensure_ascii=False)}</script></head>
+<body class="writing-index">{header()}<main id="main"><header class="writing-hero"><p class="section-kicker">Articles</p><h1>Writing about AI in practice.</h1><p>Five articles in one continuous reading stream. Scroll from agentic commerce through generative interfaces, operating systems, and agent workflows.</p></header><section class="article-stream" aria-label="Articles">{stream}</section></main>{footer()}<script src="/script.js"></script></body></html>
 """
 
 

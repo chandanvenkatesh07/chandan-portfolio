@@ -205,6 +205,84 @@ html[data-theme="light"] .article-author img {
   padding: clamp(6rem, 13vw, 11rem) 0 clamp(4rem, 8vw, 7rem);
 }
 .writing-hero > p:last-child { max-width: 680px; margin-bottom: 0; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.3rem); }
+.article-stream {
+  width: min(calc(100% - 8vw), 1120px);
+  margin-inline: auto;
+  padding-bottom: var(--section-space);
+  border-top: 1px solid var(--line);
+}
+
+.stream-article {
+  padding: clamp(4rem, 9vw, 8rem) 0;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1.42fr);
+  gap: clamp(3rem, 8vw, 7rem);
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 90px;
+}
+
+.stream-article-header {
+  position: sticky;
+  top: 96px;
+}
+
+.stream-article-meta {
+  margin-bottom: 1.15rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stream-article-meta span {
+  color: var(--accent);
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stream-article-header h2 {
+  margin-bottom: 1.6rem;
+  font-size: clamp(1.85rem, 3.5vw, 3.25rem);
+  line-height: 1.04;
+}
+
+.stream-article-cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 14px;
+  outline: 1px solid oklch(1 0 0 / 0.1);
+  outline-offset: -1px;
+  box-shadow: var(--shadow-card);
+}
+
+html[data-theme="light"] .stream-article-cover {
+  outline-color: oklch(0 0 0 / 0.1);
+}
+
+.stream-article-body {
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
+  line-height: 1.74;
+}
+
+.stream-article-body > p,
+.stream-article-body > ul,
+.stream-article-body > ol,
+.stream-article-body > blockquote,
+.stream-article-body > pre {
+  margin-bottom: 1.25em;
+}
+
+.stream-article-body h2,
+.stream-article-body h3,
+.stream-article-body h4 {
+  margin-top: 1.85em;
+}
+
 .writing-grid { padding-bottom: var(--section-space); border-top: 1px solid var(--line); }
 .writing-card {
   padding: clamp(1.8rem, 4vw, 3rem) 0;
@@ -250,6 +328,9 @@ html[data-theme="light"] .article-author img {
   .writing-card { grid-template-columns: 1fr; gap: 0.9rem; }
   .writing-card-meta { flex-direction: row; justify-content: space-between; }
   .writing-card-link { margin-top: 0.35rem; }
+  .stream-article { grid-template-columns: 1fr; gap: 2.5rem; }
+  .stream-article-header { position: static; }
+  .stream-article-cover { max-width: 520px; }
 }
 
 @media (max-width: 560px) {
@@ -265,5 +346,8 @@ html[data-theme="light"] .article-author img {
   .article-hero h1,
   .writing-hero h1 { font-size: clamp(2.45rem, 13vw, 4rem); }
   .article-cover { border-radius: 14px; }
+  .article-stream { width: min(calc(100% - 2.5rem), var(--max-width)); }
+  .stream-article { padding: 4rem 0; gap: 2rem; }
+  .stream-article-header h2 { font-size: clamp(1.85rem, 10vw, 2.75rem); }
   .article-footer { flex-direction: column; }
 }
