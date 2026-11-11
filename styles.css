@@ -1077,7 +1077,7 @@ html[data-theme="light"] .profile-photo-shell img {
 
 .project-symbol {
   height: 130px;
-  margin: 2.1rem 0 1.4rem;
+  margin: 0 0 1.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
