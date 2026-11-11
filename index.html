@@ -51,7 +51,7 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header" data-header>
-      <a class="brand" href="#top" aria-label="Chandan Venkatesh, home">
+      <a class="brand" href="#top" aria-label="Chandan Venkatesh">
         <span class="brand-mark" aria-hidden="true">CV</span>
         <span class="brand-text">Chandan Venkatesh</span>
       </a>
@@ -195,76 +195,86 @@
         </div>
 
         <article class="feature-case">
-          <div class="case-visual associate-visual" role="img" aria-label="Abstract visualization of a retail associate voice assistant">
-            <div class="mock-window associate-console">
+          <div class="case-visual associate-visual" role="img" aria-label="OpenOMS sourcing decision trace for a multi-line order">
+            <div class="mock-window associate-console openoms-console">
               <div class="mock-toolbar">
                 <span></span><span></span><span></span>
-                <small>retail-associate-assistant</small>
+                <small>openoms · sourcing trace</small>
               </div>
-              <div class="associate-screen">
+              <div class="associate-screen openoms-screen">
                 <div class="associate-status">
                   <span></span>
-                  Shadow mode · Listening locally
+                  CP-SAT · Optimal · 176.9 ms p50
                 </div>
-                <div class="conversation-line conversation-customer">
-                  <small>Customer</small>
-                  <p>Where can I find a replacement air filter?</p>
+                <div class="decision-line">
+                  <small>Order line 01 · HAMMER-001</small>
+                  <p>store-chi <span>42 mi</span></p>
                 </div>
-                <div class="conversation-line conversation-assistant">
-                  <small>Associate cue</small>
-                  <p>Air filters · Aisle 12 · Bay 4</p>
+                <div class="decision-line">
+                  <small>Order line 02 · DRILL-001</small>
+                  <p>dc-midwest <span>118 mi</span></p>
                 </div>
                 <div class="assistant-path">
-                  <span>Fast lookup</span>
-                  <span>Confidence gate</span>
-                  <span>Grounded fallback</span>
+                  <span>Inventory cap</span>
+                  <span>Split penalty</span>
+                  <span>Trace recorded</span>
                 </div>
               </div>
-              <div class="orchestration-pill">Local first · LLM when ambiguous</div>
+              <div class="orchestration-pill">Deterministic commit path · Agent-accessible tools</div>
             </div>
           </div>
           <div class="case-copy">
-            <div class="case-meta"><span>Flagship case study</span><time datetime="2026-07-10">July 2026</time></div>
-            <h3>Retail Associate Assistant</h3>
+            <div class="case-meta"><span>Featured architecture case study</span><time datetime="2026-11-10">Nov 2026</time></div>
+            <h3>OpenOMS</h3>
             <p class="case-lede">
-              A local-first voice assistant that listens in shadow mode, resolves common store questions on a deterministic fast path, and uses a grounded model only when the request is ambiguous.
+              An inspectable order-sourcing kernel where CP-SAT owns multi-line fulfillment decisions and AI agents interact through bounded MCP tools outside the inventory commit path.
             </p>
             <ul class="evidence-list">
-              <li>Sub-second fuzzy lookup keeps the LLM off the common path</li>
-              <li>Conversation shadowing preserves customer and associate context</li>
-              <li>Confidence gating controls grounded model escalation</li>
-              <li>Private spoken cues support the associate without interrupting the interaction</li>
+              <li>Joint optimization enforces line assignment and aggregate inventory constraints</li>
+              <li>Policy weights make distance-versus-consolidation tradeoffs explicit</li>
+              <li>Six MCP tools cover sourcing, relaxation, options, and explanations</li>
+              <li>Repeated synthetic evaluation reports latency, feasibility, shipments, and distance</li>
             </ul>
             <div class="case-links">
-              <a href="https://github.com/chandanvenkatesh07/retail-associate-assistant" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
-              <a href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_built-a-prototype-retail-associate-copilot-activity-7484408067980341248-vjwt" target="_blank" rel="noreferrer">Watch the demonstration <span aria-hidden="true">↗</span></a>
+              <a href="/articles/openoms-deterministic-order-management/">Read the case study <span aria-hidden="true">→</span></a>
+              <a href="https://github.com/chandanvenkatesh07/openoms" target="_blank" rel="noreferrer">Source and evaluator <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </article>
 
         <div class="project-grid">
-          <article class="project-card project-card-compass">
+          <article class="project-card project-card-adaptive">
             <div class="project-card-top">
               <span class="project-number">02</span>
-              <time datetime="2026-10-10">Oct 2026</time>
+              <time datetime="2026-11-10">Nov 2026</time>
             </div>
-            <div class="project-symbol compass-symbol" aria-hidden="true">
-              <span class="compass-ring"></span>
-              <span class="compass-needle"></span>
-              <span class="compass-route"></span>
+            <div class="project-symbol adaptive-symbol" aria-hidden="true">
+              <span class="adaptive-sidebar-symbol"></span>
+              <span class="adaptive-content-symbol"><i></i><i></i><i></i></span>
             </div>
-            <p class="project-label">Multimodal AI · Guided selling</p>
-            <h3>Retail Compass</h3>
-            <p>An iPad-first customer assistant using voice and vision to ground recommendations in the product catalog, guide shoppers to the aisle and bay, and hand context to an associate.</p>
-            <a class="card-link" href="https://github.com/chandanvenkatesh07/retail-compass" target="_blank" rel="noreferrer">
-              Explore the source
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"></path></svg>
-            </a>
+            <p class="project-label">Generative UI · Grounding</p>
+            <h3>Adaptive Storefront</h3>
+            <p>An intent-driven storefront where an LLM selects from five typed UI tools while React, Zod schemas, and catalog grounding retain control. Deterministic evaluation covered tool validation and 200 fallback executions; live-model accuracy remains unmeasured.</p>
+            <div class="card-links-row"><a class="card-link" href="/articles/adaptive-storefront-continued/">Case study <span aria-hidden="true">→</span></a><a class="card-link" href="https://github.com/chandanvenkatesh07/adaptive-storefront" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a></div>
+          </article>
+
+          <article class="project-card project-card-copilot">
+            <div class="project-card-top">
+              <span class="project-number">03</span>
+              <time datetime="2026-11-10">Nov 2026</time>
+            </div>
+            <div class="project-symbol copilot-symbol" aria-hidden="true">
+              <span class="sound-wave"></span><span class="sound-wave"></span><span class="sound-wave"></span><span class="sound-wave"></span><span class="sound-wave"></span>
+            </div>
+            <p class="project-label">Retrieval · Grounded voice AI</p>
+            <h3>Retail Associate Assistant</h3>
+            <p>A local-first assistant that resolves common store questions through hybrid retrieval and deterministic database projection, escalating only genuine ambiguity. A 34-case synthetic evaluation measured retrieval accuracy, routing, latency, and model-call avoidance.</p>
+            <div class="card-links-row"><a class="card-link" href="/articles/retail-associate-grounded-ai/">Case study <span aria-hidden="true">→</span></a><a class="card-link" href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_built-a-prototype-retail-associate-copilot-activity-7484408067980341248-vjwt" target="_blank" rel="noreferrer">Demo <span aria-hidden="true">↗</span></a></div>
           </article>
 
           <article class="project-card project-card-demand">
             <div class="project-card-top">
-              <span class="project-number">03</span>
+              <span class="project-number">04</span>
               <time datetime="2026-06-08">Jun 2026</time>
             </div>
             <div class="project-symbol demand-symbol" aria-hidden="true">
@@ -272,29 +282,8 @@
             </div>
             <p class="project-label">Decision intelligence · Supply chain</p>
             <h3>Disaster Demand Intelligence</h3>
-            <p>A hurricane-readiness system that scores likely retail demand deterministically, then uses a local model to explain priorities and generate store preparation plans.</p>
-            <a class="card-link" href="https://github.com/chandanvenkatesh07/disaster-demand-intel" target="_blank" rel="noreferrer">
-              Explore the source
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"></path></svg>
-            </a>
-          </article>
-
-          <article class="project-card project-card-adaptive">
-            <div class="project-card-top">
-              <span class="project-number">04</span>
-              <time datetime="2026-06-14">Jun 2026</time>
-            </div>
-            <div class="project-symbol adaptive-symbol" aria-hidden="true">
-              <span class="adaptive-sidebar-symbol"></span>
-              <span class="adaptive-content-symbol"><i></i><i></i><i></i></span>
-            </div>
-            <p class="project-label">Generative UI · Commerce</p>
-            <h3>Adaptive Storefront</h3>
-            <p>A GenUI commerce experiment where AI changes the structure of the page—not just product ranking—based on the shopper’s current intent.</p>
-            <div class="card-links-row">
-              <a class="card-link" href="https://github.com/chandanvenkatesh07/adaptive-storefront" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
-              <a class="card-link" href="https://www.linkedin.com/posts/chandan-venkatesh-53884428_ive-been-trying-to-understand-what-after-ugcPost-7472672024079966209-EbB9/" target="_blank" rel="noreferrer">Build notes <span aria-hidden="true">↗</span></a>
-            </div>
+            <p>A hurricane-readiness prototype that scores demand pressure and creates preparation plans with deterministic rules. A local model explains calculated priorities; it does not own inventory or transfer decisions.</p>
+            <a class="card-link" href="https://github.com/chandanvenkatesh07/disaster-demand-intel" target="_blank" rel="noreferrer">Explore the source <span aria-hidden="true">↗</span></a>
           </article>
         </div>
 
@@ -352,34 +341,34 @@
         </div>
 
         <div class="article-list">
+          <a class="article-row" href="/articles/openoms-deterministic-order-management/">
+            <time datetime="2026-11-10">10 Nov 2026</time>
+            <div><span>Decision architecture</span><h3>OpenOMS: Deterministic Order Management with AI-Agent Integration</h3></div>
+            <p>CP-SAT sourcing, MCP tools, repeated benchmarks, and the transaction and security boundaries still required.</p>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
+          </a>
+          <a class="article-row" href="/articles/adaptive-storefront-continued/">
+            <time datetime="2026-11-10">10 Nov 2026</time>
+            <div><span>Generative UI</span><h3>Adaptive Storefront: Intent-Driven Commerce UI with LLM Tool Calling</h3></div>
+            <p>Typed composition, catalog grounding, streaming, MCP reuse, deterministic fallbacks, and measured control gaps.</p>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
+          </a>
+          <a class="article-row" href="/articles/retail-associate-grounded-ai/">
+            <time datetime="2026-11-10">10 Nov 2026</time>
+            <div><span>Retrieval and grounding</span><h3>Retail Associate Assistant: Retrieval and Grounded AI for Commerce</h3></div>
+            <p>Hybrid retrieval, tool authorization, fail-silent behavior, and the limits of a 34-case synthetic evaluation.</p>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
+          </a>
           <a class="article-row" href="/articles/#future-of-e-commerce">
             <time datetime="2026-10-31">31 Oct 2026</time>
             <div><span>Agentic commerce</span><h3>The Future of E-Commerce: Your Next Customer May Never Browse Your Website</h3></div>
             <p>Why retailers need to prepare for AI agents that discover, compare, and decide on a customer’s behalf.</p>
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
           </a>
-          <a class="article-row" href="/articles/#adaptive-storefront-continued">
-            <time datetime="2026-06-20">20 Jun 2026</time>
-            <div><span>Generative UI</span><h3>Adaptive Storefront — Continued</h3></div>
-            <p>Live intent drift, bounded model planning, and an application that keeps ownership of rendering and truth.</p>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
-          </a>
           <a class="article-row" href="/articles/#starbucks-ai-supply-chain-reliability">
             <time datetime="2026-05-23">23 May 2026</time>
             <div><span>AI operating models</span><h3>The Starbucks AI Inventory Story Is Really a Supply-Chain Lesson</h3></div>
             <p>Why a model’s signal matters only when the operating loop can convert it into a reliable outcome.</p>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
-          </a>
-          <a class="article-row" href="/articles/#one-refactor-two-ai-assistants">
-            <time datetime="2026-05-16">16 May 2026</time>
-            <div><span>AI-assisted engineering</span><h3>One Refactor, Two AI Assistants, 5,000+ Lines</h3></div>
-            <p>A comparative field report on using two coding assistants against a real 5,552-line Python refactor.</p>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
-          </a>
-          <a class="article-row" href="/articles/#sunday-star-wars-retro">
-            <time datetime="2026-05-10">10 May 2026</time>
-            <div><span>Agent workflows</span><h3>Sunday Star Wars Retro: I Made My AI Team Run a Retro on Me</h3></div>
-            <p>What a five-agent side-project team revealed about waiting, context, feedback loops, and my own workflow.</p>
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"></path></svg>
           </a>
         </div>

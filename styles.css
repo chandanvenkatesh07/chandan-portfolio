@@ -5,7 +5,7 @@
   --surface-2: #1a2229;
   --ink: #f4f1e8;
   --muted: #a8afb3;
-  --faint: #717a80;
+  --faint: #7f898f;
   --line: rgba(255, 255, 255, 0.12);
   --line-soft: rgba(255, 255, 255, 0.075);
   --accent: #b7f36b;
@@ -26,7 +26,7 @@ html[data-theme="light"] {
   --surface-2: #e9e5da;
   --ink: #121619;
   --muted: #596166;
-  --faint: #7c8387;
+  --faint: #686f73;
   --line: rgba(0, 0, 0, 0.14);
   --line-soft: rgba(0, 0, 0, 0.075);
   --accent: #70aa22;
@@ -854,6 +854,43 @@ html[data-theme="light"] .profile-photo-shell img {
   background: var(--accent);
   border-radius: 50%;
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.openoms-screen {
+  justify-content: center;
+}
+
+.decision-line {
+  padding: 1rem 1.1rem;
+  color: #eaf0f2;
+  background: #182229;
+  border: 1px solid rgba(234, 240, 242, 0.08);
+  border-radius: 12px;
+}
+
+.decision-line small {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #849199;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.decision-line p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.86rem;
+}
+
+.decision-line p span {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
 
 .conversation-line {
