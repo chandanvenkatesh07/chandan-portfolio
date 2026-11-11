@@ -16,10 +16,10 @@
   <header class="site-header" data-header><a class="brand" href="/" aria-label="Chandan Venkatesh"><span class="brand-mark" aria-hidden="true">CV</span><span class="brand-text">Chandan Venkatesh</span></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav><div class="header-actions"><button class="icon-button" type="button" data-theme-toggle aria-label="Use light theme"><span class="theme-icon theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.75v2M12 19.25v2M21.25 12h-2M4.75 12h-2M18.54 5.46l-1.41 1.41M6.87 17.13l-1.41 1.41M18.54 18.54l-1.41-1.41M6.87 6.87 5.46 5.46"></path></svg></span><span class="theme-icon theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 15.1A8.4 8.4 0 0 1 8.9 4a8.4 8.4 0 1 0 11.1 11.1Z"></path></svg></span></button><a class="button button-small button-ghost header-resume" href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span class="sr-only">Open navigation</span></button></div></header>
   <nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav>
   <main id="main"><article>
-    <header class="article-hero"><a class="article-back" href="/articles/">← All writing</a><p class="section-kicker">Decision architecture · Order management</p><h1>OpenOMS — Deterministic Order Management with AI-Agent Integration</h1><div class="article-byline"><span>Chandan Venkatesh</span><time datetime="2026-11-10">November 10, 2026</time><span>Measured on synthetic data</span></div></header>
+    <header class="article-hero"><a class="article-back" href="/articles/">← All writing</a><p class="section-kicker">Decision architecture · Order management</p><h1>OpenOMS — Deterministic Order Management with AI-Agent Integration</h1><div class="article-byline"><span>Chandan Venkatesh</span><time datetime="2026-11-10">November 10, 2026</time><span>Reproducible sourcing evaluation</span></div></header>
     <div class="article-layout"><div class="article-body">
       <p class="article-lede">Order sourcing changes inventory, shipment topology, promise dates, and customer commitments. OpenOMS keeps that commit path deterministic and exposes it to agents as a constrained tool surface instead of delegating fulfillment decisions to an LLM.</p>
-      <aside class="article-evidence-note"><strong>Evidence boundary:</strong> the architecture and tests are code-verified. Benchmark results use a seeded synthetic network on one machine. They are not production throughput or reliability claims.</aside>
+      <aside class="article-evidence-note"><strong>Evaluation scope:</strong> the architecture and tests are code-verified. Benchmarks use a seeded synthetic network on one machine; production throughput and reliability require representative operational data.</aside>
 
       <h2>The implemented architecture</h2>
       <div class="architecture-diagram" role="img" aria-label="Client or agent calls MCP tools, which call OpenOMS service, candidate lookup, CP-SAT sourcing, promise calculation, reservations, and an in-memory decision store.">
@@ -51,12 +51,12 @@
       <p>All 60 service-limit runs reported <code>OPTIMAL</code>. Greedy was much faster—roughly 0.005–0.058 ms p50—and matched CP-SAT in the low-contention case. The optimizer earned its latency only when consolidation policy or cross-line inventory interactions mattered.</p>
 
       <h2>Failure and security boundaries</h2>
-      <div class="article-table-wrap"><table><thead><tr><th>Failure</th><th>Implemented behavior</th><th>Missing production control</th></tr></thead><tbody>
+      <div class="article-table-wrap"><table><thead><tr><th>Failure</th><th>Implemented behavior</th><th>Required for production</th></tr></thead><tbody>
         <tr><td>Invalid order or tool input</td><td>Pydantic/FastMCP rejection</td><td>Stable external error contract</td></tr>
         <tr><td>No feasible inventory</td><td>No decision saved</td><td>Durable retry or escalation</td></tr>
         <tr><td>Duplicate reservation key</td><td>Existing in-memory reservation returned</td><td>Cross-process idempotency</td></tr>
         <tr><td>Later reservation fails</td><td>Earlier line reservations can remain</td><td>Atomic transaction or compensation</td></tr>
-        <tr><td>Unauthorized caller</td><td>No protection</td><td>Authentication, tenant authorization, tool policy</td></tr>
+        <tr><td>Unauthorized caller</td><td>Not implemented in reference build</td><td>Authentication, tenant authorization, tool policy</td></tr>
       </tbody></table></div>
       <p><code>MemoryStore</code> is the active runtime. The Postgres and Redis files are scaffolding, not the execution path. State and idempotency disappear on restart, and multi-line reservation is not transactional.</p>
 
@@ -65,8 +65,8 @@
       <p>The commit path has no model cost because its decisions and explanations are deterministic. An external agent may incur model cost, but OpenOMS does not record that usage, so cost per agent-assisted task is unknown.</p>
 
       <h2>What the evidence supports</h2>
-      <p>The evidence does not show that CP-SAT always wins. It shows something more useful: the system exposes policy tradeoffs, keeps probabilistic reasoning outside inventory mutation, and makes failure boundaries inspectable.</p>
-      <p>The next credible work is transactional persistence, concurrency control, authentication, durable recovery, exported telemetry, and evaluation on representative operational data—not another agent feature.</p>
+      <p>The evaluation shows where CP-SAT earns its latency: the system exposes policy tradeoffs, keeps probabilistic reasoning outside inventory mutation, and makes failure boundaries inspectable.</p>
+      <p>Production hardening priorities are transactional persistence, concurrency control, authentication, durable recovery, exported telemetry, and evaluation on representative operational data.</p>
       <div class="article-actions"><a href="https://github.com/chandanvenkatesh07/openoms" target="_blank" rel="noreferrer">Open source and evaluator ↗</a><a href="https://github.com/chandanvenkatesh07/openoms/blob/main/docs/evaluation.md" target="_blank" rel="noreferrer">Evaluation methodology ↗</a></div>
     </div><aside class="article-author"><img src="/assets/chandan-venkatesh.jpg" alt="Chandan Venkatesh" width="88" height="88"><strong>Chandan Venkatesh</strong><p>Enterprise AI and Commerce Architect. I build grounded AI systems across the retail lifecycle.</p><a href="/">About my work →</a></aside></div>
   </article>

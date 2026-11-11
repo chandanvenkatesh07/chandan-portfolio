@@ -376,13 +376,12 @@ html[data-theme="light"] .article-author img {
 }
 
 .article-directory-groups {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: block;
 }
 
 .article-directory-groups > section {
   min-width: 0;
-  padding: 1.25rem 2rem 1.5rem 0;
+  padding: 1.25rem 0 1.5rem;
 }
 
 .article-directory-groups > section + section {
@@ -413,9 +412,7 @@ html[data-theme="light"] .article-author img {
 .article-directory-groups a {
   min-height: 58px;
   padding: 0.68rem 0;
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: 0.65rem;
+  display: block;
   align-items: start;
   color: var(--ink);
   text-decoration: none;
