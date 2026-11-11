@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A field report on evaluating two AI-assisted refactoring workflows with the same repository, prompt, tests, and review constraints.">
+  <link rel="canonical" href="https://chandanvenkatesh.com/articles/one-refactor-two-ai-assistants/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="Chandan Venkatesh"><meta property="og:title" content="Comparing AI-Assisted Refactoring Workflows"><meta property="og:description" content="What equal starting conditions, independent review, and passing tests reveal about AI-assisted refactoring."><meta property="og:url" content="https://chandanvenkatesh.com/articles/one-refactor-two-ai-assistants/"><meta property="og:image" content="https://chandanvenkatesh.com/assets/articles/one-refactor-two-ai-assistants.png">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Comparing AI-Assisted Refactoring Workflows"><meta name="twitter:description" content="A bounded comparison of two AI-assisted refactoring workflows."><meta name="twitter:image" content="https://chandanvenkatesh.com/assets/articles/one-refactor-two-ai-assistants.png">
+  <meta name="theme-color" content="#0a0d10">
+  <title>Comparing AI-Assisted Refactoring Workflows — Chandan Venkatesh</title>
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/article-styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Comparing AI-Assisted Refactoring Workflows","description":"A field report on evaluating two AI-assisted refactoring workflows with the same repository, prompt, tests, and review constraints.","datePublished":"2026-05-16","dateModified":"2026-11-10","mainEntityOfPage":"https://chandanvenkatesh.com/articles/one-refactor-two-ai-assistants/","author":{"@type":"Person","name":"Chandan Venkatesh","url":"https://chandanvenkatesh.com/"},"publisher":{"@type":"Person","name":"Chandan Venkatesh"},"image":"https://chandanvenkatesh.com/assets/articles/one-refactor-two-ai-assistants.png","isBasedOn":"https://www.linkedin.com/pulse/one-refactor-two-ai-assistants-5000-lines-chandan-venkatesh-sydfe"}</script>
+</head>
+<body class="article-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="Chandan Venkatesh, home"><span class="brand-mark" aria-hidden="true">CV</span><span class="brand-text">Chandan Venkatesh</span></a>
+    <nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav>
+    <div class="header-actions"><button class="icon-button" type="button" data-theme-toggle aria-label="Use light theme"><span class="theme-icon theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.75v2M12 19.25v2M21.25 12h-2M4.75 12h-2M18.54 5.46l-1.41 1.41M6.87 17.13l-1.41 1.41M18.54 18.54l-1.41-1.41M6.87 6.87 5.46 5.46"></path></svg></span><span class="theme-icon theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 15.1A8.4 8.4 0 0 1 8.9 4a8.4 8.4 0 1 0 11.1 11.1Z"></path></svg></span></button><a class="button button-small button-ghost header-resume" href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span class="sr-only">Open navigation</span></button></div>
+  </header>
+  <nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a><a href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Open résumé</a></nav>
+  <main id="main">
+    <article>
+      <header class="article-hero"><a class="article-back" href="/articles/">← All writing</a><p class="section-kicker">AI-assisted engineering</p><h1>Comparing AI-Assisted Refactoring Workflows</h1><p class="article-lede">Passing tests established behavioral safety. The useful comparison began with everything the tests could not tell me.</p><div class="article-byline"><span>Chandan Venkatesh</span><time datetime="2026-05-16">May 16, 2026</time><span>Revised November 10, 2026</span></div></header>
+      <figure class="article-cover"><img src="/assets/articles/one-refactor-two-ai-assistants.png" alt="Abstract comparison of two AI-assisted software workflows" width="1280" height="720"></figure>
+      <div class="article-layout">
+        <div class="article-body">
+          <p>A Python application had grown into a 5,552-line module. It still worked and its tests passed, but the file combined UI state, workflow phases, dialogs, and helpers in a way that made changes increasingly difficult to reason about.</p>
+          <p>I used the refactor as a bounded comparison of two enterprise-approved AI coding assistants. The objective was not to declare a universal winner. It was to observe how different assistants handled the same architectural task under equal starting conditions—and to identify the review controls that still belonged to the engineer.</p>
+
+          <h2>Keeping the comparison bounded</h2>
+          <p>Both assistants received the same repository snapshot, the same task, separate worktrees, and the same test suite. The instruction was deliberately direct: split the monolith into smaller modules, preserve behavior, preserve compatible imports, and keep the tests passing.</p>
+          <p>I evaluated the first completed result from each workflow rather than giving one assistant additional cleanup rounds. That made the comparison narrower but fairer. Additional prompting would have measured my ability to steer each tool, not only its initial implementation choices.</p>
+          <p>Three focused review passes supplemented the implementation work:</p>
+          <ul>
+            <li>one examined candidate module boundaries and dependency direction;</li>
+            <li>one looked specifically for import, compatibility, and test risks;</li>
+            <li>one compared the proposed outcome with the actual diff.</li>
+          </ul>
+          <p>The important pattern was separation of duties. “Review this refactor” is vague. “Find compatibility risks introduced by moved imports” creates a review task with a clear failure condition.</p>
+
+          <h2>What the tests established—and what they did not</h2>
+          <p>Both assistants produced a recognizable modular structure: workflow-phase modules, UI components, dialogs, and a compatibility layer. Both preserved the tested behavior.</p>
+          <p>That result was necessary, but it was not sufficient. Passing tests showed that known behavior remained intact. They did not establish that the new dependency graph was easy to understand, that imports were minimal, that responsibilities were well separated, or that the diff would be maintainable.</p>
+          <p>The two results illustrated that gap. One output was approximately 6,939 lines across the resulting package; the other was approximately 9,600. Lines of code were not the score—splitting a module often adds imports and compatibility wrappers—but the difference was a useful inspection signal. The larger result retained considerably more scaffolding and repeated import structure.</p>
+          <p>This was an observed field comparison, not a general benchmark. It showed where to inspect, not which tool would perform better on another repository or prompt.</p>
+
+          <h2>The engineering review loop</h2>
+          <p>The experiment reinforced a review sequence I now use for material AI-assisted changes:</p>
+          <ol>
+            <li><strong>Define invariants before generation.</strong> State the behavior, interfaces, import paths, and tests that must remain stable.</li>
+            <li><strong>Isolate the work.</strong> Use separate branches or worktrees so outputs can be compared without cross-contamination.</li>
+            <li><strong>Run automated checks.</strong> Tests, static analysis, formatting, and import validation provide different kinds of evidence.</li>
+            <li><strong>Inspect architecture, not just correctness.</strong> Review dependency direction, module ownership, duplication, compatibility layers, and the size and shape of the diff.</li>
+            <li><strong>Assign focused reviewers.</strong> Give each human or agent reviewer one explicit risk to investigate.</li>
+            <li><strong>Require human acceptance.</strong> The engineer remains accountable for whether the result makes the system easier to change.</li>
+          </ol>
+
+          <h2>What I would measure next</h2>
+          <p>A stronger follow-up would add repeated runs, explicit maintainability criteria, static-analysis results, review time, defects found after the initial pass, and the number of corrective prompts required. Those measures would evaluate the full engineering workflow rather than a single generated diff.</p>
+          <p>The practical lesson is straightforward: AI can accelerate a refactor, but it does not remove the need to design the evaluation. Tests protect behavior. Structured review protects the codebase.</p>
+
+          <aside class="article-evidence-note"><strong>Evidence boundary.</strong> This article reports one controlled field comparison on one repository and task. It is not a general ranking of coding assistants, and the observed line counts are diagnostic context rather than a quality metric.</aside>
+          <aside class="article-origin"><span>Adapted from an earlier LinkedIn field note</span><a href="https://www.linkedin.com/pulse/one-refactor-two-ai-assistants-5000-lines-chandan-venkatesh-sydfe" target="_blank" rel="noreferrer">Original and discussion ↗</a></aside>
+        </div>
+        <aside class="article-author"><img src="/assets/chandan-venkatesh.jpg" alt="Chandan Venkatesh" width="88" height="88"><strong>Chandan Venkatesh</strong><p>Enterprise AI and Commerce Architect. I build grounded AI systems across the retail lifecycle.</p><a href="/">About my work →</a></aside>
+      </div>
+    </article>
+    <section class="related-writing" aria-labelledby="related-title"><p class="section-kicker">Keep reading</p><h2 id="related-title">More field notes</h2><div><a href="/articles/openoms-deterministic-order-management/"><span>Decision architecture</span><strong>OpenOMS: Deterministic Order Management</strong><time datetime="2026-11-10">November 10, 2026</time></a><a href="/articles/adaptive-storefront-continued/"><span>Generative UI</span><strong>Adaptive Storefront: Bounded LLM Tool Calling</strong><time datetime="2026-06-20">June 20, 2026</time></a><a href="/articles/starbucks-ai-supply-chain-reliability/"><span>AI operating models</span><strong>AI Inventory Is a Supply-Chain Reliability Problem</strong><time datetime="2026-05-23">May 23, 2026</time></a></div></section>
+  </main>
+  <footer class="article-footer"><p>© <span data-year></span> Chandan Venkatesh</p><div><a href="mailto:chandan07@gmail.com">Email</a><a href="https://github.com/chandanvenkatesh07" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/chandan-venkatesh-53884428/" target="_blank" rel="noreferrer">LinkedIn</a></div></footer>
+  <script src="/script.js"></script>
+</body>
+</html>
