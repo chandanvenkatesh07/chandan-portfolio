@@ -20,7 +20,19 @@
   </url>
   <url>
     <loc>https://chandanvenkatesh.com/articles/adaptive-storefront-continued/</loc>
-    <lastmod>2026-06-20</lastmod>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chandanvenkatesh.com/articles/openoms-deterministic-order-management/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chandanvenkatesh.com/articles/retail-associate-grounded-ai/</loc>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>

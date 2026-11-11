@@ -1,84 +1,66 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="After the first post - Spent a little bit more time on Adaptive Storefront. The original version showed the same home-improvement storefront changing for different shoppers: appliance buying, gift shopping, and…">
-  <link rel="canonical" href="https://chandanvenkatesh.com/articles/adaptive-storefront-continued/">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta property="og:type" content="article"><meta property="og:site_name" content="Chandan Venkatesh"><meta property="og:title" content="Adaptive Storefront - Continued"><meta property="og:description" content="After the first post - Spent a little bit more time on Adaptive Storefront. The original version showed the same home-improvement storefront changing for different shoppers: appliance buying, gift shopping, and…"><meta property="og:url" content="https://chandanvenkatesh.com/articles/adaptive-storefront-continued/"><meta property="og:image" content="https://chandanvenkatesh.com/assets/articles/adaptive-storefront-continued.jpg">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Adaptive Storefront - Continued"><meta name="twitter:description" content="After the first post - Spent a little bit more time on Adaptive Storefront. The original version showed the same home-improvement storefront changing for different shoppers: appliance buying, gift shopping, and…"><meta name="twitter:image" content="https://chandanvenkatesh.com/assets/articles/adaptive-storefront-continued.jpg">
-  <meta name="theme-color" content="#0a0d10">
-  <title>Adaptive Storefront - Continued — Chandan Venkatesh</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An engineering case study of Adaptive Storefront: typed LLM tools, catalog grounding, streaming, MCP, deterministic fallbacks, evaluation, and production boundaries.">
+  <link rel="canonical" href="https://chandanvenkatesh.com/articles/adaptive-storefront-continued/"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="Chandan Venkatesh"><meta property="og:title" content="Adaptive Storefront — Intent-Driven Commerce UI with LLM Tool Calling"><meta property="og:description" content="Typed composition, catalog grounding, streaming, MCP reuse, deterministic fallback, and measured control gaps."><meta property="og:url" content="https://chandanvenkatesh.com/articles/adaptive-storefront-continued/"><meta property="og:image" content="https://chandanvenkatesh.com/assets/articles/adaptive-storefront-continued.jpg">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Adaptive Storefront — Intent-Driven Commerce UI with LLM Tool Calling"><meta name="twitter:description" content="Typed composition, catalog grounding, streaming, MCP reuse, and deterministic fallback."><meta name="twitter:image" content="https://chandanvenkatesh.com/assets/articles/adaptive-storefront-continued.jpg">
+  <meta name="theme-color" content="#0a0d10"><title>Adaptive Storefront — Intent-Driven Commerce UI with LLM Tool Calling</title>
   <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/article-styles.css">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Adaptive Storefront - Continued", "description": "After the first post - Spent a little bit more time on Adaptive Storefront. The original version showed the same home-improvement storefront changing for different shoppers: appliance buying, gift shopping, and…", "datePublished": "2026-06-20", "dateModified": "2026-06-20", "mainEntityOfPage": "https://chandanvenkatesh.com/articles/adaptive-storefront-continued/", "author": {"@type": "Person", "name": "Chandan Venkatesh", "url": "https://chandanvenkatesh.com/"}, "publisher": {"@type": "Person", "name": "Chandan Venkatesh"}, "image": "https://chandanvenkatesh.com/assets/articles/adaptive-storefront-continued.jpg", "isBasedOn": "https://www.linkedin.com/pulse/adaptive-storefront-continued-chandan-venkatesh-oqzde"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Adaptive Storefront — Intent-Driven Commerce UI with LLM Tool Calling","description":"An engineering case study of typed LLM tools, catalog grounding, streaming, MCP, fallbacks, and evaluation.","datePublished":"2026-06-20","dateModified":"2026-11-10","mainEntityOfPage":"https://chandanvenkatesh.com/articles/adaptive-storefront-continued/","author":{"@type":"Person","name":"Chandan Venkatesh","url":"https://chandanvenkatesh.com/"},"image":"https://chandanvenkatesh.com/assets/articles/adaptive-storefront-continued.jpg","codeRepository":"https://github.com/chandanvenkatesh07/adaptive-storefront"}</script>
 </head>
 <body class="article-page">
   <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" data-header>
-  <a class="brand" href="/" aria-label="Chandan Venkatesh, home"><span class="brand-mark" aria-hidden="true">CV</span><span class="brand-text">Chandan Venkatesh</span></a>
-  <nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav>
-  <div class="header-actions"><button class="icon-button" type="button" data-theme-toggle aria-label="Use light theme">
-  <span class="theme-icon theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.75v2M12 19.25v2M21.25 12h-2M4.75 12h-2M18.54 5.46l-1.41 1.41M6.87 17.13l-1.41 1.41M18.54 18.54l-1.41-1.41M6.87 6.87 5.46 5.46"></path></svg></span>
-  <span class="theme-icon theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 15.1A8.4 8.4 0 0 1 8.9 4a8.4 8.4 0 1 0 11.1 11.1Z"></path></svg></span>
-</button><a class="button button-small button-ghost header-resume" href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span class="sr-only">Open navigation</span></button></div>
-</header>
-<nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a><a href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Open résumé</a></nav>
-  <main id="main">
-    <article>
-      <header class="article-hero"><a class="article-back" href="/articles/">← All writing</a><p class="section-kicker">Generative UI</p><h1>Adaptive Storefront - Continued</h1><div class="article-byline"><span>Chandan Venkatesh</span><time datetime="2026-06-20">June 20, 2026</time></div></header>
-      <figure class="article-cover"><img src="/assets/articles/adaptive-storefront-continued.jpg" alt="" width="1280" height="720"></figure>
-      <div class="article-layout"><div class="article-body"><p>
-          After the first post - Spent a little bit more time on Adaptive Storefront.</p>
-<p>
-          The original version showed the same home-improvement storefront changing for different shoppers: appliance buying, gift shopping, and repair support. The point was that those pages were not hardcoded as separate templates.</p>
-<p>
-          There is no fixed &quot;dishwasher page&quot; or &quot;gift page&quot; sitting behind the UI. The app exposes a small set of rendering tools and the AI path can compose the page through those tools at runtime.</p>
-<p>
-          The part I wanted to push further was this: can the app adapt while the session is changing, not only after someone lands with a established persona?</p>
-<p>
-          That matters for conversion from browse to Orders . A lot of shoppers are not lost because there wan&#x27;t the product they needed . They are lost because the page makes them do too much translation. They know they have a leaking faucet or need a dishwasher or need a useful gift and we still don&#x27;t surface things they care about.</p>
-<p>
-          If the page can answer some of those questions before the customer has to ask, that is real leverage. For known intents which is majority of us shoppers we know what we are looking for already and are focussed on it - No chat required. No long search journey. No &quot;ask me more about this&quot; wizard , if we can highlight even 60% of the info they require without asking</p>
-<p>
-          The analogy I keep thinking about is an airport. If you land in a new airport, the best experience is not always finding a person and explaining where you are trying to go. Sometimes the best experience is better signage: clear gates, transfer paths, baggage directions, and the right cues appearing at the right moment. You can still ask someone for help but you should not need to for the common journeys.</p>
-<p>
-          That is how I think about this storefront. Chat can still exist, but the application itself should carry more of the guidance.</p>
-<p>
-          The new version adds live intent drift. The app watches lightweight session signals like search input, search submit, category clicks, and product page views. Those feed a simple rule-based scorer for intents such as repair, gift, outdoor, project, and starter.</p>
-<p>
-          When an intent starts to look likely, the app can generate that page in the background. If the signal gets stronger, it can switch to that experience. If the page was already built, the switch feels instant.</p>
-<p>
-          This is still a GenUI experiment, but not in the &quot;model writes React&quot; sense. Each tool maps to a section the app already knows how to render. The model can decide that an appliance buyer needs comparison first, then install accessories, then a buying checklist. But it cannot invent a fake component or a fake product.</p>
-<p>
-          That boundary is the whole design. The model plans. React renders. The app validates. The catalog grounds the product truth.</p>
-<p>
-          I also think this is a better framing than plain recommendation. Recommendation usually asks, &quot;Which products should rank higher?&quot; That is useful, but limited. This demo asks, &quot;What should this page become so the customer can make progress faster?&quot;</p>
-<p>
-          For a repair shopper, the answer may be a guide-first page. For a gift shopper, curation may matter more. For an appliance buyer, comparison may need to come before browsing.</p>
-<p>
-          The product list changes, but so does the decision support around it.</p>
-<p>
-          I kept the system deliberately less magical than it could sound. Product IDs are checked against a real 40-product catalog. Tool arguments are validated with Zod schemas. If generation fails or the API key is missing, the app falls back to deterministic layouts.</p>
-<p>
-          That is the version of AI in product surfaces I am most interested in: not unlimited generation, but bounded orchestration. Another thing I added is more evidence in the UI. Adaptive pages can get weird quickly if no one understands why they changed. The demo now has a signal evidence bar, an &quot;Optimized for...&quot; intent banner, an intent trail, a debug panel for live scores, and the persona picker for explicit testing.</p>
-<p>
-          That is partly for the demo, but it is also a product lesson. If an experience adapts, the user and the team need some way to inspect the reasoning.</p>
-<p>
-          The interesting version of GenUI is not &quot;let the model do anything.&quot; It is: let the model make bounded experience decisions inside constraints the product already owns.</p>
-<p>
-          The first post showed the screenshots. This update adds more of the system behavior around them: live intent tracking, background generation, cached page states, intent switching, and better inspectability.</p>
-<p>
-          The question I keep coming back to is:</p>
-<p>
-          Where can the product reduce customer effort by becoming more contextual, without giving up control of the experience?</p><aside class="article-origin"><span>Originally published on LinkedIn</span><a href="https://www.linkedin.com/pulse/adaptive-storefront-continued-chandan-venkatesh-oqzde" target="_blank" rel="noreferrer">Read the original and discussion ↗</a></aside></div><aside class="article-author"><img src="/assets/chandan-venkatesh.jpg" alt="Chandan Venkatesh" width="88" height="88"><strong>Chandan Venkatesh</strong><p>Enterprise AI and Commerce Architect. I build grounded AI systems across the retail lifecycle.</p><a href="/">About my work →</a></aside></div>
-    </article>
-    <section class="related-writing" aria-labelledby="related-title"><p class="section-kicker">Keep reading</p><h2 id="related-title">More field notes</h2><div><a href="/articles/future-of-e-commerce/"><span>Agentic commerce</span><strong>The Future of E-Commerce: Your Next Customer May Never Browse Your Website</strong><time datetime="2026-10-31">October 31, 2026</time></a><a href="/articles/starbucks-ai-supply-chain-reliability/"><span>AI operating models</span><strong>Starbucks AI Inventory Story Was Really a Supply Chain Reliability Lesson</strong><time datetime="2026-05-23">May 23, 2026</time></a><a href="/articles/one-refactor-two-ai-assistants/"><span>AI-assisted engineering</span><strong>One Refactor, Two AI Assistants 5000+ lines</strong><time datetime="2026-05-16">May 16, 2026</time></a></div></section>
+  <header class="site-header" data-header><a class="brand" href="/" aria-label="Chandan Venkatesh"><span class="brand-mark" aria-hidden="true">CV</span><span class="brand-text">Chandan Venkatesh</span></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav><div class="header-actions"><button class="icon-button" type="button" data-theme-toggle aria-label="Use light theme"><span class="theme-icon theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.75v2M12 19.25v2M21.25 12h-2M4.75 12h-2M18.54 5.46l-1.41 1.41M6.87 17.13l-1.41 1.41M18.54 18.54l-1.41-1.41M6.87 6.87 5.46 5.46"></path></svg></span><span class="theme-icon theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 15.1A8.4 8.4 0 0 1 8.9 4a8.4 8.4 0 1 0 11.1 11.1Z"></path></svg></span></button><a class="button button-small button-ghost header-resume" href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span class="sr-only">Open navigation</span></button></div></header>
+  <nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav>
+  <main id="main"><article>
+    <header class="article-hero"><a class="article-back" href="/articles/">← All writing</a><p class="section-kicker">Generative UI · Grounded composition</p><h1>Adaptive Storefront — Intent-Driven Commerce UI with LLM Tool Calling</h1><div class="article-byline"><span>Chandan Venkatesh</span><time datetime="2026-11-10">Updated November 10, 2026</time><span>Prototype, not production</span></div></header>
+    <figure class="article-cover"><img src="/assets/articles/adaptive-storefront-continued.jpg" alt="Adaptive Storefront interface showing intent-aware commerce layouts" width="1280" height="720"></figure>
+    <div class="article-layout"><div class="article-body">
+      <p class="article-lede">The model does not write markup or product facts. It selects from five typed rendering tools; React owns rendering, and the catalog owns product identity, price, and availability.</p>
+      <aside class="article-evidence-note"><strong>Evidence boundary:</strong> deterministic tool validation, catalog grounding, and no-key fallback behavior are measured. Live-model tool-selection accuracy, provider latency, token use, and cost are not yet measured.</aside>
+
+      <h2>Controlled composition, not generated code</h2>
+      <div class="architecture-diagram" role="img" aria-label="Shopper signals are scored deterministically. The generation route asks an LLM to select typed tools, validates them with Zod, grounds product IDs, streams blocks, and renders them through a finite React registry. Deterministic presets handle missing model access or errors.">
+        <div class="architecture-lane"><span class="architecture-node">Shopper signals</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Deterministic intent scoring</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Generation request</span></div>
+        <div class="architecture-lane"><span class="architecture-node">LLM chooses typed tools</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Zod validation</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Catalog grounding</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Finite React renderer</span></div>
+        <p class="architecture-caption">Missing key or model failure takes the deterministic preset path. The same grounded tools are also exposed through a stateless MCP endpoint.</p>
+      </div>
+      <p>The model-callable vocabulary contains hero, product grid, guide, gift collection, and comparison tools. Each tool has a bounded Zod schema. Product-bearing calls filter IDs through the 40-item catalog before the block reaches the browser. The renderer switches over a finite TypeScript union, so model output never becomes HTML or JSX.</p>
+
+      <h2>Streaming, completeness, and fallback</h2>
+      <p><code>/api/gen-page</code> uses required tool calling and streams each valid block as NDJSON. The browser can render progressively rather than wait for one monolithic response. Request input is truncated to 800 characters and model output is capped at 1,200 tokens.</p>
+      <p>Without an API key, the route streams one of eight hand-authored, catalog-grounded presets. A model or stream exception produces the same deterministic fallback. The explicit persona path also checks that the final page has a hero and product content, plus mode-specific guide or comparison blocks.</p>
+      <p>The live-cluster path is less complete: it accepts any non-empty set of individually valid blocks. If generation fails after a cluster activates, that cluster is suppressed until reload and the UI can remain on a skeleton. This is a demonstrated reliability gap, not production recovery.</p>
+
+      <h2>Intent drift stays deterministic</h2>
+      <p>The model does not decide when the shopper’s intent changed. Search and browse signals are scored against repair, gift, outdoor, project, and starter clusters using rule-based keyword and tag matching.</p>
+      <ul><li>Score 0.3 starts background generation.</li><li>Score 0.6 plus a 0.1 lead activates the cluster.</li><li>A 60-second lock raises the competing threshold to 0.8.</li><li>Signals and generated pages persist in <code>sessionStorage</code> for the browser session.</li></ul>
+      <p>Appliance is implemented as a persona and generation mode, but not as a live drift cluster. That distinction prevents the portfolio from claiming a broader detector than the code implements.</p>
+
+      <h2>MCP reuse and its security boundary</h2>
+      <p><code>/api/mcp</code> exposes the catalog resource, a composition prompt, and the same five render tools over stateless HTTP. Product tools reject calls that do not retain enough catalog IDs after grounding.</p>
+      <p>The endpoint has no authentication, tenant authorization, rate limiting, or tool-use policy. “MCP-enabled” therefore describes implemented interoperability—not a production-secured agent gateway.</p>
+
+      <h2>Deterministic evaluation</h2>
+      <p>No model key was available for the evaluation, so it measured the code around the model rather than inventing tool-selection metrics.</p>
+      <div class="article-table-wrap"><table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>Valid and invalid tool cases</td><td>10/10 expected outcomes</td></tr><tr><td>Invalid IDs after grounding</td><td>0</td></tr><tr><td>No-key fallback executions</td><td>200/200 successful</td></tr><tr><td>Fallback presets covered</td><td>8</td></tr><tr><td>Invalid fallback product references</td><td>0</td></tr><tr><td>In-process fallback latency</td><td>p50 0.041 ms; p95 0.113 ms</td></tr></tbody></table></div>
+      <p>Fallback latency is direct Node route execution. It excludes network time, browser rendering, cold starts, and provider latency.</p>
+      <p>The evaluator found a concrete gap: catalog grounding removes unknown IDs but does not deduplicate valid ones. A comparison containing the same real product twice currently satisfies the two-product minimum.</p>
+
+      <h2>Reliability, security, and economics</h2>
+      <div class="article-table-wrap"><table><thead><tr><th>Area</th><th>Implemented</th><th>Missing evidence or control</th></tr></thead><tbody><tr><td>Generated fields</td><td>Per-tool Zod rejection</td><td>Server-enforced page order and uniqueness</td></tr><tr><td>Product grounding</td><td>Unknown IDs removed</td><td>Distinct-product invariant</td></tr><tr><td>Model outage</td><td>Deterministic preset</td><td>Background recovery after activation</td></tr><tr><td>Caching</td><td>Browser-session cache</td><td>Shared cache, expiry, invalidation</td></tr><tr><td>Security</td><td>Typed inputs and length limits</td><td>Auth, rate and spend limits, audit log</td></tr><tr><td>Observability</td><td>Development intent log</td><td>Request traces, tokens, provider latency, cost</td></tr></tbody></table></div>
+      <p>The no-key path bypasses model calls, and session caches avoid repeat generation. Those mechanisms reduce calls, but token usage is not recorded. A cost-per-success number would therefore be invented and is intentionally absent.</p>
+
+      <h2>What the prototype demonstrates</h2>
+      <p>The credible claim is bounded generative composition: typed tools, catalog grounding, finite rendering, deterministic intent drift, streaming, caching, MCP reuse, and explicit fallbacks.</p>
+      <p>The next work is to deduplicate products, enforce a server-side page contract, apply completeness checks to background generation, evaluate real model responses, instrument tokens and latency, and protect public model and MCP endpoints.</p>
+      <div class="article-actions"><a href="https://github.com/chandanvenkatesh07/adaptive-storefront" target="_blank" rel="noreferrer">Open source and evaluator ↗</a><a href="https://github.com/chandanvenkatesh07/adaptive-storefront/blob/evidence/portfolio-case-studies-2026-11/docs/evaluation.md" target="_blank" rel="noreferrer">Evaluation methodology ↗</a></div>
+    </div><aside class="article-author"><img src="/assets/chandan-venkatesh.jpg" alt="Chandan Venkatesh" width="88" height="88"><strong>Chandan Venkatesh</strong><p>Enterprise AI and Commerce Architect. I build grounded AI systems across the retail lifecycle.</p><a href="/">About my work →</a></aside></div>
+  </article>
+  <section class="related-writing" aria-labelledby="related-title"><p class="section-kicker">Keep reading</p><h2 id="related-title">Related engineering cases</h2><div><a href="/articles/openoms-deterministic-order-management/"><span>Decision architecture</span><strong>OpenOMS and deterministic commitments</strong><time datetime="2026-11-10">November 10, 2026</time></a><a href="/articles/retail-associate-grounded-ai/"><span>Retrieval</span><strong>Retail Associate Assistant and grounded facts</strong><time datetime="2026-11-10">November 10, 2026</time></a><a href="/articles/future-of-e-commerce/"><span>Agentic commerce</span><strong>The Future of E-Commerce</strong><time datetime="2026-10-31">October 31, 2026</time></a></div></section>
   </main>
-  <footer class="article-footer">
-  <p>© <span data-year></span> Chandan Venkatesh</p>
-  <div><a href="mailto:chandan07@gmail.com">Email</a><a href="https://github.com/chandanvenkatesh07" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/chandan-venkatesh-53884428/" target="_blank" rel="noreferrer">LinkedIn</a></div>
-</footer>
+  <footer class="article-footer"><p>© <span data-year></span> Chandan Venkatesh</p><div><a href="mailto:chandan07@gmail.com">Email</a><a href="https://github.com/chandanvenkatesh07" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/chandan-venkatesh-53884428/" target="_blank" rel="noreferrer">LinkedIn</a></div></footer>
   <script src="/script.js"></script>
-</body>
-</html>
+</body></html>

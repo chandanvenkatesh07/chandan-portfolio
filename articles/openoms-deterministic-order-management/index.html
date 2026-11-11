@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An engineering case study of OpenOMS: multi-line CP-SAT sourcing, MCP tools, repeated synthetic benchmarks, failure behavior, and production boundaries.">
+  <link rel="canonical" href="https://chandanvenkatesh.com/articles/openoms-deterministic-order-management/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="Chandan Venkatesh"><meta property="og:title" content="OpenOMS — Deterministic Order Management with AI-Agent Integration"><meta property="og:description" content="CP-SAT order sourcing, bounded MCP tools, measured tradeoffs, failure behavior, and honest production boundaries."><meta property="og:url" content="https://chandanvenkatesh.com/articles/openoms-deterministic-order-management/"><meta property="og:image" content="https://chandanvenkatesh.com/assets/chandan-venkatesh.jpg">
+  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="OpenOMS — Deterministic Order Management with AI-Agent Integration"><meta name="twitter:description" content="CP-SAT order sourcing, bounded MCP tools, measured tradeoffs, and honest production boundaries.">
+  <meta name="theme-color" content="#0a0d10"><title>OpenOMS — Deterministic Order Management with AI-Agent Integration</title>
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/article-styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"OpenOMS — Deterministic Order Management with AI-Agent Integration","description":"An engineering case study of multi-line CP-SAT sourcing, MCP tools, benchmarks, failure behavior, and production boundaries.","datePublished":"2026-11-10","dateModified":"2026-11-10","mainEntityOfPage":"https://chandanvenkatesh.com/articles/openoms-deterministic-order-management/","author":{"@type":"Person","name":"Chandan Venkatesh","url":"https://chandanvenkatesh.com/"},"codeRepository":"https://github.com/chandanvenkatesh07/openoms"}</script>
+</head>
+<body class="article-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" data-header><a class="brand" href="/" aria-label="Chandan Venkatesh"><span class="brand-mark" aria-hidden="true">CV</span><span class="brand-text">Chandan Venkatesh</span></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav><div class="header-actions"><button class="icon-button" type="button" data-theme-toggle aria-label="Use light theme"><span class="theme-icon theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.75v2M12 19.25v2M21.25 12h-2M4.75 12h-2M18.54 5.46l-1.41 1.41M6.87 17.13l-1.41 1.41M18.54 18.54l-1.41-1.41M6.87 6.87 5.46 5.46"></path></svg></span><span class="theme-icon theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 15.1A8.4 8.4 0 0 1 8.9 4a8.4 8.4 0 1 0 11.1 11.1Z"></path></svg></span></button><a class="button button-small button-ghost header-resume" href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span class="sr-only">Open navigation</span></button></div></header>
+  <nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav>
+  <main id="main"><article>
+    <header class="article-hero"><a class="article-back" href="/articles/">← All writing</a><p class="section-kicker">Decision architecture · Order management</p><h1>OpenOMS — Deterministic Order Management with AI-Agent Integration</h1><div class="article-byline"><span>Chandan Venkatesh</span><time datetime="2026-11-10">November 10, 2026</time><span>Measured on synthetic data</span></div></header>
+    <div class="article-layout"><div class="article-body">
+      <p class="article-lede">Order sourcing changes inventory, shipment topology, promise dates, and customer commitments. OpenOMS keeps that commit path deterministic and exposes it to agents as a constrained tool surface instead of delegating fulfillment decisions to an LLM.</p>
+      <aside class="article-evidence-note"><strong>Evidence boundary:</strong> the architecture and tests are code-verified. Benchmark results use a seeded synthetic network on one machine. They are not production throughput or reliability claims.</aside>
+
+      <h2>The implemented architecture</h2>
+      <div class="architecture-diagram" role="img" aria-label="Client or agent calls MCP tools, which call OpenOMS service, candidate lookup, CP-SAT sourcing, promise calculation, reservations, and an in-memory decision store.">
+        <div class="architecture-lane"><span class="architecture-node">Client or AI agent</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Six validated MCP tools</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">OpenOMS service</span></div>
+        <div class="architecture-lane"><span class="architecture-node">Candidate inventory</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">CP-SAT joint assignment</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Promise + reservations</span><b class="architecture-arrow" aria-hidden="true">→</b><span class="architecture-node">Trace + MemoryStore</span></div>
+        <p class="architecture-caption">The agent can invoke and present decisions. Deterministic code selects nodes, creates promises, reserves inventory, and records state.</p>
+      </div>
+      <p>The tool surface covers inventory lookup, committed sourcing, radius relaxation, dry-run option comparison, re-sourcing diffs, and trace-backed explanations. There is no model call in the repository’s sourcing or reservation path.</p>
+
+      <h2>Why CP-SAT instead of per-line ranking</h2>
+      <p>For every feasible line and node, the solver creates a Boolean assignment. It requires exactly one node per line and caps aggregate demand when multiple lines compete for the same SKU at the same node. The objective makes policy visible:</p>
+      <pre><code>objective = weighted distance
+          + capacity pressure
+          + nodes used × split penalty</code></pre>
+      <p>A high split penalty can reduce boxes while increasing distance. OpenOMS retains a nearest-first greedy baseline so that tradeoff can be measured rather than hidden behind an “AI score.”</p>
+
+      <h2>Commit, options, and recovery boundaries</h2>
+      <p><code>source_order</code> retrieves candidates for every line, solves them jointly, calculates a promise per shipment, creates line-aware reservations, saves the decision, and appends lifecycle events. <code>get_sourcing_options</code> compares speed and consolidation profiles without reservations or persistence.</p>
+      <p><code>relax_and_source_order</code> tries a configured search-radius cascade until inventory becomes feasible. That is bounded retry logic, not durable agent orchestration: attempts live in process memory and cannot resume after restart.</p>
+      <p>Re-sourcing is also precise in scope. A caller creates a later decision and <code>explain_resourcing</code> compares stored traces. The system does not automatically monitor and re-source orders.</p>
+
+      <h2>Repeated benchmark results</h2>
+      <p>The evaluator reused the seeded Hearthline network: 200 nodes, 500 SKUs, and 30,522 inventory records. Each scenario ran 20 times at the normal 200 ms service limit on Python 3.14.4 and Apple Silicon.</p>
+      <div class="article-table-wrap"><table><thead><tr><th>Scenario</th><th>Feasible</th><th>CP-SAT p50 / p95</th><th>Shipments</th><th>Distance tradeoff</th></tr></thead><tbody>
+        <tr><td>50 lines, low split penalty</td><td>20/20</td><td>170.2 / 180.1 ms</td><td>6 vs greedy 6</td><td>Equal at 831.0 mi</td></tr>
+        <tr><td>50 lines, consolidation pressure</td><td>20/20</td><td>176.9 / 184.2 ms</td><td>3 vs greedy 6</td><td>CP-SAT +483.8 mi</td></tr>
+        <tr><td>Four constrained lines</td><td>20/20</td><td>1.8 / 2.0 ms</td><td>2 vs greedy 3</td><td>CP-SAT +490.8 mi</td></tr>
+      </tbody></table></div>
+      <p>All 60 service-limit runs reported <code>OPTIMAL</code>. Greedy was much faster—roughly 0.005–0.058 ms p50—and matched CP-SAT in the low-contention case. The optimizer earned its latency only when consolidation policy or cross-line inventory interactions mattered.</p>
+
+      <h2>Failure and security boundaries</h2>
+      <div class="article-table-wrap"><table><thead><tr><th>Failure</th><th>Implemented behavior</th><th>Missing production control</th></tr></thead><tbody>
+        <tr><td>Invalid order or tool input</td><td>Pydantic/FastMCP rejection</td><td>Stable external error contract</td></tr>
+        <tr><td>No feasible inventory</td><td>No decision saved</td><td>Durable retry or escalation</td></tr>
+        <tr><td>Duplicate reservation key</td><td>Existing in-memory reservation returned</td><td>Cross-process idempotency</td></tr>
+        <tr><td>Later reservation fails</td><td>Earlier line reservations can remain</td><td>Atomic transaction or compensation</td></tr>
+        <tr><td>Unauthorized caller</td><td>No protection</td><td>Authentication, tenant authorization, tool policy</td></tr>
+      </tbody></table></div>
+      <p><code>MemoryStore</code> is the active runtime. The Postgres and Redis files are scaffolding, not the execution path. State and idempotency disappear on restart, and multi-line reservation is not transactional.</p>
+
+      <h2>Observability and AI economics</h2>
+      <p>Decision traces include solver status and wall time, assignments, inventory-before values, split count, and reservation IDs. An in-memory event log records the major phases. There is no exported tracing backend or durable audit retention.</p>
+      <p>The commit path has no model cost because its decisions and explanations are deterministic. An external agent may incur model cost, but OpenOMS does not record that usage, so cost per agent-assisted task is unknown.</p>
+
+      <h2>What the evidence supports</h2>
+      <p>The evidence does not show that CP-SAT always wins. It shows something more useful: the system exposes policy tradeoffs, keeps probabilistic reasoning outside inventory mutation, and makes failure boundaries inspectable.</p>
+      <p>The next credible work is transactional persistence, concurrency control, authentication, durable recovery, exported telemetry, and evaluation on representative operational data—not another agent feature.</p>
+      <div class="article-actions"><a href="https://github.com/chandanvenkatesh07/openoms" target="_blank" rel="noreferrer">Open source and evaluator ↗</a><a href="https://github.com/chandanvenkatesh07/openoms/blob/evidence/portfolio-case-studies-2026-11/docs/evaluation.md" target="_blank" rel="noreferrer">Evaluation methodology ↗</a></div>
+    </div><aside class="article-author"><img src="/assets/chandan-venkatesh.jpg" alt="Chandan Venkatesh" width="88" height="88"><strong>Chandan Venkatesh</strong><p>Enterprise AI and Commerce Architect. I build grounded AI systems across the retail lifecycle.</p><a href="/">About my work →</a></aside></div>
+  </article>
+  <section class="related-writing" aria-labelledby="related-title"><p class="section-kicker">Keep reading</p><h2 id="related-title">Related engineering cases</h2><div><a href="/articles/adaptive-storefront-continued/"><span>Generative UI</span><strong>Adaptive Storefront with bounded tool calling</strong><time datetime="2026-11-10">November 10, 2026</time></a><a href="/articles/retail-associate-grounded-ai/"><span>Retrieval</span><strong>Retail Associate Assistant and grounded facts</strong><time datetime="2026-11-10">November 10, 2026</time></a><a href="/articles/future-of-e-commerce/"><span>Agentic commerce</span><strong>The Future of E-Commerce</strong><time datetime="2026-10-31">October 31, 2026</time></a></div></section>
+  </main>
+  <footer class="article-footer"><p>© <span data-year></span> Chandan Venkatesh</p><div><a href="mailto:chandan07@gmail.com">Email</a><a href="https://github.com/chandanvenkatesh07" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/chandan-venkatesh-53884428/" target="_blank" rel="noreferrer">LinkedIn</a></div></footer>
+  <script src="/script.js"></script>
+</body></html>
