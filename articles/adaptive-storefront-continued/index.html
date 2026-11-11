@@ -51,6 +51,7 @@
 
       <h2>Reliability, security, and economics</h2>
       <div class="article-table-wrap"><table><thead><tr><th>Area</th><th>Implemented</th><th>Missing evidence or control</th></tr></thead><tbody><tr><td>Generated fields</td><td>Per-tool Zod rejection</td><td>Server-enforced page order and uniqueness</td></tr><tr><td>Product grounding</td><td>Unknown IDs removed</td><td>Distinct-product invariant</td></tr><tr><td>Model outage</td><td>Deterministic preset</td><td>Background recovery after activation</td></tr><tr><td>Caching</td><td>Browser-session cache</td><td>Shared cache, expiry, invalidation</td></tr><tr><td>Security</td><td>Typed inputs and length limits</td><td>Auth, rate and spend limits, audit log</td></tr><tr><td>Observability</td><td>Development intent log</td><td>Request traces, tokens, provider latency, cost</td></tr></tbody></table></div>
+      <p>The evidence-branch dependency audit currently reports 20 findings—4 low, 5 moderate, 9 high, and 2 critical—including a warning against the pinned Next.js 14.2.5 release. The build succeeds, but the dependency set must be upgraded and re-audited before deployment.</p>
       <p>The no-key path bypasses model calls, and session caches avoid repeat generation. Those mechanisms reduce calls, but token usage is not recorded. A cost-per-success number would therefore be invented and is intentionally absent.</p>
 
       <h2>What the prototype demonstrates</h2>
