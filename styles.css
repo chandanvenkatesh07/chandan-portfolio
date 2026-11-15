@@ -2057,7 +2057,7 @@ html[data-theme="light"] .profile-photo-shell img {
   }
 
   .hero h1 {
-    font-size: clamp(3.6rem, 18vw, 6.2rem);
+    font-size: clamp(3.4rem, 16vw, 5.6rem);
   }
 
   .hero-profile {
