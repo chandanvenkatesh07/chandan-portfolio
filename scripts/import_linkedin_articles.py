@@ -245,10 +245,10 @@ def header() -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" data-header>
   <a class="brand" href="/" aria-label="Chandan Venkatesh, home"><span class="brand-mark" aria-hidden="true">CV</span><span class="brand-text">Chandan Venkatesh</span></a>
-  <nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a></nav>
+  <nav class="desktop-nav" aria-label="Primary navigation"><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/" aria-current="page">Articles</a><a href="/#career">Career</a><a href="/#proof">Patents</a></nav>
   <div class="header-actions">{THEME_BUTTON}<a class="button button-small button-ghost header-resume" href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span class="sr-only">Open navigation</span></button></div>
 </header>
-<nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Proof</a><a href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Open résumé</a></nav>
+<nav class="mobile-menu" id="mobile-menu" data-mobile-menu aria-label="Mobile navigation" hidden><a href="/#work">AI work</a><a href="/#impact">Retail depth</a><a href="/articles/">Articles</a><a href="/#career">Career</a><a href="/#proof">Patents</a><a href="/assets/chandan-venkatesh-resume.pdf" target="_blank" rel="noreferrer">Open résumé</a></nav>
 """.strip()
 
 
